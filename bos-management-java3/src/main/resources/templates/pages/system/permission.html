@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!-公共部分->
+	<span th:replace="/pages/common :: css('权限列表页面')"></span>
+	<span th:replace="/pages/common :: js"></span>
+		<script type="text/javascript">
+			$(function () {
+				var columnArr=[ [
+                    {
+                        field : 'id',
+                        title : '编号',
+                        width : 200
+                    },
+                    {
+                        field : 'name',
+                        title : '名称',
+                        width : 200
+                    },
+                    {
+                        field : 'keyword',
+                        title : '关键字',
+                        width : 200
+                    },
+                    {
+                        field : 'description',
+                        title : '描述',
+                        width : 200
+                    }
+				] ];
+
+				var toolbar=[
+					{
+                        id : 'button-add',
+                        text : '增加权限',
+                        iconCls : 'icon-add',
+                        handler : function(){
+                            //跳转到添加页面
+                            location.href= "/pages/system/permission_add";
+                        }
+					}
+				];
+				var options={
+                    "columns":columnArr,
+                    "url":"/permission",
+                    "method":"get",
+                    "toolbar":toolbar,
+                    "striped" : true ,				//斑马线（隔行换色）
+                    "pagination" : true ,
+                    "rownumbers" : true ,
+                    "pageSize" : 2 ,
+                    "pageList" : [2,10,20] ,
+				};
+
+				$("#grid").datagrid(options);
+            });
+		</script>
+	</head>
+
+	<body class="easyui-layout">
+		<div data-options="region:'center'">
+			<table id="grid"></table>
+		</div>
+	</body>
+
+</html>

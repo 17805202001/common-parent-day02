@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!-公共部分->
+	<span th:replace="/pages/common :: css('菜单列表页面')"></span>
+	<span th:replace="/pages/common :: js"></span>
+
+		<script type="text/javascript">
+			$(function(){
+				$("#grid").datagrid({
+					toolbar : [
+						{
+							id : 'add',
+							text : '添加菜单',
+							iconCls : 'icon-add',
+							handler : function(){
+								location.href='/pages/system/menu_add';
+							}
+						}           
+					],
+					url : '/menu',
+					method:'get',
+					pagination:true,
+					pageSize:5,
+					pageList:[2,5,10],
+					columns : [ [
+					  {
+						  field : 'id',
+						  title : '编号',
+						  width : 200
+					  },
+					  {
+						  field : 'name',
+						  title : '名称',
+						  width : 200
+					  },  
+					  {
+						  field : 'description',
+						  title : '描述',
+						  width : 200
+					  },  
+					  {
+						  field : 'priority',
+						  title : '优先级',
+						  width : 200
+					  },  
+					  {
+						  field : 'page',
+						  title : '路径',
+						  width : 200
+					  }
+					] ]
+				});
+			});
+		</script>
+	</head>
+
+	<body class="easyui-layout">
+		<div data-options="region:'center'">
+			<table id="grid"></table>
+		</div>
+	</body>
+
+</html>

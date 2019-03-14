@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--通用css代码-->
+    <span th:replace="/pages/common :: css('BOS管理系统 首页')"></span>
+    <!--通用js代码-->
+    <span th:replace="/pages/common :: js"></span>
+
+    <!--ztree css-->
+    <link rel="stylesheet" href="/js/ztree/zTreeStyle.css" type="text/css" />
+    <!--ztree js-->
+    <script src="/js/ztree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
+
+
+</head>
+<body>
+
+    <ul id="tree" class="ztree"></ul>
+    <script type="text/javascript">
+
+            //基本设置
+            var setting={
+                data:{
+                    simpleData:{
+                        enable : true,      //开启是否显示文件夹
+                        pIdKey:"pId"        //确定数据中，父节点的id名
+                    }
+                },
+                callback : {
+                    onClick : function(srcEvent, treeId, node, clickFlag){
+                        //如果对象存放，将执行代码
+                        if(node.path){
+                            //将指定内容输出到浏览器的控制台
+                            console.info(node.path);
+                            var b=$('#tt').tabs('exists',node.name);
+                            if(b){
+//存在
+                                $('#tt').tabs('select',node.name);
+
+                            }else{
+//添加新的
+                                $('#tt').tabs('add',{
+                                    title:node.name,
+                                    content:'<iframe src="'+node.path+'" height="100%" width="100%" frameborder="0">',
+                                    tools:[{
+                                        iconCls:'icon-mini-refresh',
+                                        handler:function(){
+                                            alert('refresh');
+                                        }
+                                    }]
+                                });
+                            }
+                        }
+                    }
+                }
+            };
+
+            //加载数据
+            var demo=[
+                {id:1,name:"第一组"},
+                {id:2,name:"第二组"},
+                {id:3,name:"第三组"},
+                {id:4,name:"第四组"},
+                {id:5,name:"第五组"},
+                {id:6,name:"第六组"},
+                {id:7,name:"第七组"},
+                {id:8,name:"小新",pId:1,path:"asd"},
+                {id:9,name:"小红",pId:1},
+                {id:10,name:"小白",pId:1},
+            ];
+
+            //渲染ztree
+            $.fn.zTree.init($("#tree"), setting, demo);
+
+    </script>
+
+
+
+
+</body>
+</html>

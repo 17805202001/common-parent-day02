@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!--引入公共内容-->
+	<span th:replace="/pages/common :: css('用户列表页面')"></span>
+	<span th:replace="/pages/common :: js"></span>
+		<script type="text/javascript">
+			// 工具栏
+			var toolbar = [ {
+				id : 'button-view',	
+				text : '查看',
+				iconCls : 'icon-search',
+				handler : doView
+			}, {
+				id : 'button-add',
+				text : '新增',
+				iconCls : 'icon-add',
+				handler : doAdd
+			}, {
+				id : 'button-delete',
+				text : '删除',
+				iconCls : 'icon-cancel',
+				handler : doDelete
+			}];
+		
+		
+			// 定义标题栏
+			var columns = [ [ {
+				field : 'id',
+				checkbox : true,
+				rowspan : 2
+			}, {
+				field : 'username',
+				title : '名称',
+				width : 80,
+				rowspan : 2
+			}, {
+				field : 'gender',
+				title : '性别',
+				width : 60,
+				rowspan : 2,
+				align : 'center'
+			}, {
+				field : 'birthday',
+				title : '生日',
+				width : 120,
+				rowspan : 2,
+				align : 'center'
+			}, {
+				title : '其他信息',
+				colspan : 2
+			}, {
+				field : 'telephone',
+				title : '电话',
+				width : 400,
+				rowspan : 2
+			} ], [ {
+				field : 'station',
+				title : '单位',
+				width : 80,
+				align : 'center'
+			}, {
+				field : 'salary',
+				title : '工资',
+				width : 80,
+				align : 'right'
+			} ] ];
+			$(function(){
+				// 初始化 datagrid
+				// 创建grid
+                var options={
+                    "columns":columns,
+                    "url":"/user",
+                    "toolbar":toolbar,
+                    "method":"get",
+                    idField : 'id',
+                    "pagination" : true ,
+                    "rownumbers" : true ,
+                    "pageSize" : 2 ,
+                    "pageList" : [2,10,20] ,
+                    "onClickRow" : onClickRow,
+                    "onDblClickRow" : doDblClickRow
+                };
+                $("#grid").datagrid(options);
+				
+				$("body").css({visibility:"visible"});
+				
+			});
+			// 双击
+			function doDblClickRow(rowIndex, rowData) {
+				var items = $('#grid').datagrid('selectRow',rowIndex);
+				doView();
+			}
+			// 单击
+			function onClickRow(rowIndex){
+		
+			}
+			
+			function doAdd() {
+				location.href="userinfo.html";
+			}
+		
+			function doView() {
+				var item = $('#grid').datagrid('getSelected');
+				console.info(item);
+				//window.location.href = "edit.html";
+			}
+		
+			function doDelete() {
+				var ids = [];
+				var items = $('#grid').datagrid('getSelections');
+				for(var i=0; i<items.length; i++){
+				    ids.push(items[i].id);	    
+				}
+					
+				console.info(ids.join(","));
+				
+				$('#grid').datagrid('reload');
+				$('#grid').datagrid('uncheckAll');
+			}
+		</script>
+	</head>
+
+	<body class="easyui-layout" style="visibility:hidden;">
+		<div region="center">
+			<table id="grid"></table>
+		</div>
+	</body>
+
+</html>

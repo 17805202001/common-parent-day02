@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--引入公共内容-->
+    <span th:replace="/pages/common :: css('BOS管理系统 首页')"></span>
+    <span th:replace="/pages/common :: js"></span>
+
+    <script type="text/javascript">
+//        //警告窗口
+//        $.messager.alert('警告','警告消息',"info");       //消息图标
+//        $.messager.alert('警告','警告消息',"error");      //错误图标
+//        //确认消息窗口
+//        $.messager.confirm('删除','您确认想要删除记录吗？',function(r){
+//            if (r){
+//                alert('删除成功！！');
+//            }
+//        });
+
+        //右下角显示窗口
+        $.messager.show({
+            title:'我的消息',
+            msg:'消息将在3秒后关闭。',
+            timeout:3000,
+            showType:'slide'
+        });
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
